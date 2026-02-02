@@ -6,10 +6,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
 import group.el.de7k.WhatsDown.dto.UserRegisterRequestDto;
 import group.el.de7k.WhatsDown.dto.UserResponoseDto;
 import group.el.de7k.WhatsDown.service.AuthenticationService;
 import group.el.de7k.WhatsDown.service.UserService;
+import group.el.de7k.WhatsDown.dto.UserLoginRequestDto;
+import group.el.de7k.WhatsDown.models.User;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -30,11 +37,18 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public UserResponoseDto loginUser(@RequestParam String email, @RequestParam String password) {
-        UserResponoseDto loggedUser = userService.loginUser(email, password);
-        String token = authenticationService.authenticate(email, password);
+    public UserResponoseDto loginUser(@RequestBody UserLoginRequestDto loginRequest) {
+        UserResponoseDto loggedUser = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
+        String token = authenticationService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         loggedUser.setToken(token);
         return loggedUser;
     }
+
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+
 
 }

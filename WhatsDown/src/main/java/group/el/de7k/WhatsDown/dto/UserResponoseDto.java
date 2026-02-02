@@ -2,7 +2,7 @@ package group.el.de7k.WhatsDown.dto;
 
 public class UserResponoseDto {
 
-    private Integer id;
+    private String id;
     private String userName;
     private String profilePictureUrl;
     private String token;
@@ -10,18 +10,18 @@ public class UserResponoseDto {
     public UserResponoseDto() {
     }
 
-    public UserResponoseDto(Integer id, String userName, String token, String profilePictureUrl) {
+    public UserResponoseDto(String id, String userName, String token, String profilePictureUrl) {
         this.id = id;
         this.userName = userName;
         this.token = token;
         this.profilePictureUrl = profilePictureUrl;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

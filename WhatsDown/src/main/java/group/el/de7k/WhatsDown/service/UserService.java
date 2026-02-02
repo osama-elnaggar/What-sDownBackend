@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import group.el.de7k.WhatsDown.models.Role;
 
 import group.el.de7k.WhatsDown.Repository.UserRepository;
 import group.el.de7k.WhatsDown.dto.UserRegisterRequestDto;
@@ -41,6 +42,7 @@ public class UserService implements UserDetailsService {
         user.setEmail(userRegisterRequestDto.getEmail());
         user.setPassword(passwordEncoder.encode(userRegisterRequestDto.getPassword()));
         user.setProfilePictureUrl(userRegisterRequestDto.getProfilePictureUrl());
+        user.setRole(Role.USER);
         User savedUser = userRepository.save(user);
 
         //var token = jwtService.generateToken(savedUser);
@@ -72,11 +74,11 @@ public class UserService implements UserDetailsService {
     //     user.setPassword(passwordEncoder.encode(user.getPassword()));
     //     userRepository.save(user);
     // }
-    public User getUserById(Integer id) {
+    public User getUserById(String id) {
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
     }
 
-    public String saveProfilePictureUrl(Integer userId, String profilePictureUrl) {
+    public String saveProfilePictureUrl(String userId, String profilePictureUrl) {
         User user = getUserById(userId);
         user.setProfilePictureUrl(profilePictureUrl);
         userRepository.save(user);
