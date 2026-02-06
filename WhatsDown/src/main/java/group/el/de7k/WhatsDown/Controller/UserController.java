@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import group.el.de7k.WhatsDown.Repository.UserRepository;
 import group.el.de7k.WhatsDown.models.User;
 import group.el.de7k.WhatsDown.service.UserService;
 
@@ -15,10 +16,11 @@ import group.el.de7k.WhatsDown.service.UserService;
 public class UserController {
 
     private UserService userService;
+    private UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
-        //this.authenticationService = authenticationService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/users")
@@ -27,7 +29,7 @@ public class UserController {
         userService.getAllUsers().forEach(user -> {
             System.out.println("User: " + user.getEmail());
         });
-        return userService.getAllUsers();
+        return userRepository.findAll();
 
     }
 
