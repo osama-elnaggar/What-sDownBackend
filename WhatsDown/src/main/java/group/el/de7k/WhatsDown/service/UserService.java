@@ -6,17 +6,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import group.el.de7k.WhatsDown.models.Role;
 
 import group.el.de7k.WhatsDown.Repository.UserRepository;
+import group.el.de7k.WhatsDown.Security.JwtService;
 import group.el.de7k.WhatsDown.dto.UserRegisterRequestDto;
 import group.el.de7k.WhatsDown.dto.UserResponoseDto;
+import group.el.de7k.WhatsDown.models.Role;
 import group.el.de7k.WhatsDown.models.User;
-import group.el.de7k.WhatsDown.Security.JwtService;
-import org.springframework.security.authentication.AuthenticationManager;
-import group.el.de7k.WhatsDown.service.AuthenticationService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -102,6 +100,17 @@ public class UserService implements UserDetailsService {
                 .password(user.getPassword()) // Keep this for login; if using JWT only, can be empty
                 .authorities(authorities)
                 .build();
+    }
+
+    public UserResponoseDto AddFriend(String UserId, String Email) {
+        User user = getUserByEmail(Email);
+        User currentUser = getUserById(UserId);
+        currentUser.getFriendList().add(user);
+        user.getFriendList().add(currentUser);
+        userRepository.save(currentUser);
+        userRepository.save(user);
+        return new UserResponoseDto(user.getId(), user.getName(), user.getToken(), user.getProfilePictureUrl());
+
     }
 
 }

@@ -4,8 +4,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
 import group.el.de7k.WhatsDown.Security.JwtService;
-import group.el.de7k.WhatsDown.dto.AuthenticationRequest;
-import group.el.de7k.WhatsDown.dto.AuthenticationResponse;
 
 @Service
 public class AuthenticationService {

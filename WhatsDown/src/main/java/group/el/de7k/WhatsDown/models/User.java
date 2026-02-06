@@ -39,8 +39,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private List<User> friendList;
-
+    private String token;
     //@builder for design patterns and @data for getters and setters from lombok @noargsconstructor and allargsconstructor BRUHHHHH kol dh kan fen
+
     public User() {
     }
 
@@ -115,6 +116,10 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     @Override

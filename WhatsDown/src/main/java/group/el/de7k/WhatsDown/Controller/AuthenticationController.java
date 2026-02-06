@@ -1,29 +1,26 @@
 package group.el.de7k.WhatsDown.Controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import group.el.de7k.WhatsDown.dto.UserLoginRequestDto;
 import group.el.de7k.WhatsDown.dto.UserRegisterRequestDto;
 import group.el.de7k.WhatsDown.dto.UserResponoseDto;
+import group.el.de7k.WhatsDown.models.User;
 import group.el.de7k.WhatsDown.service.AuthenticationService;
 import group.el.de7k.WhatsDown.service.UserService;
-import group.el.de7k.WhatsDown.dto.UserLoginRequestDto;
-import group.el.de7k.WhatsDown.models.User;
-
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
-    private AuthenticationService authenticationService;
-    private UserService userService;
+    private final AuthenticationService authenticationService;
+    private final UserService userService;
 
     public AuthenticationController(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
@@ -48,7 +45,5 @@ public class AuthenticationController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-
-
 
 }

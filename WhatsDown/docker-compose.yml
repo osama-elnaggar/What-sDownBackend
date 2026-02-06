@@ -1,21 +1,53 @@
 services:
-  db:
-    container_name: whatsDown
+  postgres:
     image: postgres:latest
+    container_name: whatsdown-postgres
     environment:
       POSTGRES_USER: whatsDown
       POSTGRES_PASSWORD: mango
+      POSTGRES_DB: whatsDown
       PGDATA: /data/postgres
     volumes:
-      - db:/data/postgres
+      - postgres_data:/data/postgres
     ports:
       - "5332:5432"
     networks:
-    - db
+      - backend
     restart: unless-stopped
 
+  mongodb:
+    image: mongo:latest
+    container_name: whatsdown-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: whatsDown
+      MONGO_INITDB_ROOT_PASSWORD: mango
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+    restart: unless-stopped
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: whatsdown-mongo-express
+    restart: always
+    ports:
+      - "8084:8081"  
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://whatsDown:mango@mongodb:27017/admin
+      ME_CONFIG_BASICAUTH_USERNAME: whatsDown
+      ME_CONFIG_BASICAUTH_PASSWORD: mango
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+
 networks:
-      db:
-        driver: bridge
+  backend:
+    driver: bridge
+
 volumes:
-  db:
+  postgres_data:
+  mongo_data:
