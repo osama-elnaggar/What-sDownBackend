@@ -16,21 +16,15 @@ import group.el.de7k.WhatsDown.service.UserService;
 public class UserController {
 
     private UserService userService;
-    private UserRepository userRepository;
 
     public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
-        this.userRepository = userRepository;
+
     }
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-
-        userService.getAllUsers().forEach(user -> {
-            System.out.println("User: " + user.getEmail());
-        });
-        return userRepository.findAll();
-
+        return userService.getAllUsers();
     }
 
     @GetMapping("/users/{id}")
