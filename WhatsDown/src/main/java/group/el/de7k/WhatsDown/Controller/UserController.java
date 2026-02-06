@@ -3,14 +3,11 @@ package group.el.de7k.WhatsDown.Controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import group.el.de7k.WhatsDown.dto.UserRegisterRequestDto;
-import group.el.de7k.WhatsDown.dto.UserResponoseDto;
+import group.el.de7k.WhatsDown.Repository.UserRepository;
 import group.el.de7k.WhatsDown.models.User;
 import group.el.de7k.WhatsDown.service.UserService;
 
@@ -19,15 +16,16 @@ import group.el.de7k.WhatsDown.service.UserService;
 public class UserController {
 
     private UserService userService;
+    private UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
-        //this.authenticationService = authenticationService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return userService.getAllUsers();
+        return userRepository.findAll();
     }
 
     @GetMapping("/users/{id}")
