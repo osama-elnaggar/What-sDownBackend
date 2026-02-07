@@ -31,6 +31,7 @@ public class User {
     private String password;
     private String profilePictureUrl;
     private boolean isOnline;
+    private String token;
     @Enumerated(EnumType.STRING)
     private Role role;
     @ManyToMany
@@ -39,9 +40,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private List<User> friendList;
-    private String token;
-    //@builder for design patterns and @data for getters and setters from lombok @noargsconstructor and allargsconstructor BRUHHHHH kol dh kan fen
 
+    //@builder for design patterns and @data for getters and setters from lombok @noargsconstructor and allargsconstructor BRUHHHHH kol dh kan fen
     public User() {
     }
 
@@ -95,6 +95,7 @@ public class User {
     }
 
     public String getProfilePictureUrl() {
+
         return profilePictureUrl;
     }
 
@@ -120,6 +121,10 @@ public class User {
 
     public String getToken() {
         return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
