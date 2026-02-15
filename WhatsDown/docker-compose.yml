@@ -1,21 +1,28 @@
 services:
+  backend:
+    build:
+      context: .
+    networks:
+      - private
+    depends_on:
+    - db
+    
   db:
-    container_name: whatsDown
     image: postgres:latest
     environment:
       POSTGRES_USER: whatsDown
       POSTGRES_PASSWORD: mango
+      POSTGRES_DB: whatsDown
       PGDATA: /data/postgres
     volumes:
       - db:/data/postgres
-    ports:
-      - "5332:5432"
-    networks:
-    - db
     restart: unless-stopped
-
-networks:
-      db:
-        driver: bridge
+    networks:
+      - private
+    
 volumes:
   db:
+
+networks:
+  public:
+  private:
